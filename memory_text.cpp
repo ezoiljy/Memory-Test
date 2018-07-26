@@ -18,8 +18,8 @@ namespace repo
     {
         memset(contest, 0, sizeof(contest));
         memset(len, 0, sizeof(len));
-        memset(id, 0, sizeof(id));
-        memset(date, 0, sizeof(date));
+        // memset(id, 0, sizeof(id));
+        // memset(date, 0, sizeof(date));
         cnt_word = 0;
         cnt_log = 0;
     }
@@ -91,8 +91,6 @@ void init_word()
 #endif
     return;
 }
-
-int 
 
 void init_log()
 {
