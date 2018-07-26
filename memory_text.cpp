@@ -9,16 +9,19 @@
 #define N 2005
 namespace repo
 {
-    int cnt;
-    int id[N], date[N], len[N][2];
+    int cnt_word, cnt_log;
+    // cnt 表示总共单词数
+    int len[2][N];
     char contest[2][N][50];
+    // contest[0]存储问题 contest[1]存储答案
     void reset()
     {
         memset(contest, 0, sizeof(contest));
         memset(len, 0, sizeof(len));
         memset(id, 0, sizeof(id));
         memset(date, 0, sizeof(date));
-        cnt = 0;
+        cnt_word = 0;
+        cnt_log = 0;
     }
 };
 using namespace repo;
@@ -59,25 +62,9 @@ namespace IO
 };
 using namespace IO;
 
-/*
-inline void file_open()
+void init_word()
 {
-    FILE * lg = fopen("log", "r");
-	FILE * word = fopen("word", "r");
-	FILE * output = fopen("output", "w");
-}
-
-inline void file_close()
-{
-    fclose(log);
-	fclose(word);
-	fclose(output);
-}
-*/
-
-void init()
-{
-    FILE * wd = freopen("word", "r", stdin);
+    FILE * wd = freopen("file/word", "r", stdin);
     if(wd == NULL)
     {
         printf("Word file missing\n");
@@ -91,12 +78,13 @@ void init()
         if(ch == '.')
             flag = 1;
         else if (ch == '\\')
-            flag = 0, cnt++;
+            flag = 0, cnt_word++;
         else
-            contest[flag][cnt][len[cnt][flag]++] = ch;
+            contest[flag][cnt_word][len[flag][cnt_word]++] = ch;
         ch = read_char();
     }
     fclose(stdin);
+    wd = NULL;
 #ifdef DEBUG
     rep(i, 1, cnt)
         printf("%s\t%s\n", contest[0][i], contest[1][i]);
@@ -104,8 +92,17 @@ void init()
     return;
 }
 
+int 
+
+void init_log()
+{
+    freopen("file/log", "r", stdin);
+    
+}
+
 int main()
 {
-    init();
+    init_word();
+    init_log();
     return 0;
 }
