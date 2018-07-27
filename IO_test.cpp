@@ -7,14 +7,14 @@
 #define max(a, b) ((a) > (b) ? (a) : (b))
 #define min(a, b) ((a) < (b) ? (a) : (b))
 
-// #define CHAR
+#define CHAR
 
 namespace IO
 {
     char read_char()
     {
         char ch = getchar();
-        while(isspace(ch)) ch = getchar();
+        while(isspace(ch) && ch != EOF && ch != ' ') ch = getchar();
         return ch;
     }
     int read_int()
@@ -30,7 +30,7 @@ namespace IO
         while(isspace(ch)) ch = getchar();
         if(!isdigit(ch))
         {
-            printf("Illegal Input!\n");
+            // printf("Illegal Input!\n");
             return -1;
         }
         while(isdigit(ch))
@@ -41,7 +41,7 @@ namespace IO
         if(syb) x = -x;
         return x;
     }
-}
+};
 using namespace IO;
 
 int main()

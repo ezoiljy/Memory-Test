@@ -8,17 +8,8 @@ int tmp;
 
 int main()
 {
-	FILE * log = fopen("log", "r");
-	FILE * word = fopen("word", "r");
-	FILE * output = fopen("output", "w");
-	fscanf(log, "%d", &tmp);
-	printf("%d\n", tmp);
-	fprintf(output, "%d\n", tmp);
-	fscanf(word, "%d", &tmp);
-	printf("%d\n", tmp);
-	fprintf(output, "%d\n", tmp);
-	fclose(log);
-	fclose(word);
-	fclose(output);
+	char x;
+	scanf("%c", &x);
+	printf("%c", x);
 	return 0;
 }
