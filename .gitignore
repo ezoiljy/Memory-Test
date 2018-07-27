@@ -2,4 +2,4 @@
 /file/*
 !*.cpp
 !.gitignore
-!file/word_demo
+!/file/word_demo
