@@ -1,5 +1,5 @@
 *
-file/*
+/file/*
 !*.cpp
 !.gitignore
 !file/word_demo
