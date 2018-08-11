@@ -13,8 +13,8 @@
 #define N 2005
 namespace repo
 {
-    int cnt_word, cnt_log;
-    // cnt_word 表示总共单词数, cnt_log表示 log里单词总数
+    int cnt_word, cnt_log, cnt_rev;
+    // cnt_word 表示总共单词数, cnt_log表示 log里单词总数, cnt_rev表示当天要复习的。
     int len[2][N];
     char contest[2][N][50];
     // contest[0]存储问题 contest[1]存储答案
@@ -22,21 +22,25 @@ namespace repo
     // 上次复习时间, 复习阶段
     int cur_time;
     // 当前时间
-    int det[10];
+    int det[20];
+    bool flag[N]; // 当天需不需要复习
     void reset()
     {
         memset(contest, 0, sizeof(contest));
         memset(len, 0, sizeof(len));
         memset(state, 0, sizeof(state));
         memset(date, 0, sizeof(date));
+        memset(flag, false, sizeof(flag));
         cnt_word = 0;
         cnt_log = 0;
+        cnt_rev = 0;
         time_t t = time(NULL);
         tm* local_tm = localtime(&t);
         cur_time = (local_tm->tm_year) * 366 + (local_tm->tm_yday);
         det[1] = 0; det[2] = 1; det[3] = 1;
         det[4] = 2; det[5] = 3; det[6] = 5;
         det[7] = 7; det[8] = 9; det[9] = 10;
+        det[10] = 20;
     }
 };
 using namespace repo;
@@ -174,9 +178,40 @@ void test()
             ans = read_char();
             while(ans != 'y' && ans != 'n' && ans != 'Y' && ans != 'N')
                 ans = read_char();
-            if(ans == 'y' || ans == 'Y')
+            if((ans == 'y' || ans == 'Y') && state[i] < 10)
                 state[i]++;
+            else
+            {
+                if(state[i] > 1) state[i]--;
+                flag[i] = true;
+                cnt_rev++;
+            }
             date[i] = cur_time;
+        }
+    }
+}
+
+void review()
+{
+    char ans;
+    while(cnt_rev)
+    {
+        rep(i, 1, cnt_word)
+        {
+            if(flag[i])
+            {
+                puts(contest[0][i]);
+                sleep(5);
+                puts(contest[1][i]);
+                ans = read_char();
+                while(ans != 'y' && ans != 'n' && ans != 'Y' && ans != 'N')
+                    ans = read_char();
+                if(ans == 'y' || ans == 'Y')
+                {
+                    flag[i] = false;
+                    cnt_rev--;
+                }
+            }
         }
     }
 }
@@ -194,6 +229,7 @@ int main()
         ch = read_char();
     if(ch == 'q') return 0;
     test();
+    review();
     re_write(); // 把更新好的log写到log文件里去
     fclose(stdin);
     return 0;
